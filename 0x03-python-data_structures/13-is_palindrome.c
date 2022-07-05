@@ -1,53 +1,72 @@
-#include <stddef.h>
 #include "lists.h"
 
 /**
- * is_palindrome - checks the list for palindrome
- * @head: double pointer to the linked list
+ * reverse_listint - reverses a linked list
+ * @head: pointer to the first node in the list
  *
- * Return: 1 on True 0 on False
+ * Return: pointer to the first node in the new list
  */
-int is_palindrome(listint_t **head)
+void reverse_listint(listint_t **head)
 {
-	size_t length = get_list_num(*head);
-	size_t store_half[length];
-	int i = 0;
-	listint_t *h;
+	listint_t *prev = NULL;
+	listint_t *current = *head;
+	listint_t *next = NULL;
 
-	if (*head == NULL)
-		return (1);
-	if (length % 2 != 0)
-		return (0);
-	length = (length / 2) - 1;
-	while (h)
+	while (current)
 	{
-		if (i <= length)
-			store_half[i] = h->n;
-		else if (store_half[length--] != h->n)
-			return (0);
-		h = h->next;
+		next = current->next;
+		current->next = prev;
+		prev = current;
+		current = next;
 	}
-	return (1);
 
+	*head = prev;
 }
 
 /**
- * get_list_num - gets the number of all elements of a listint_t list
- * @h: pointer to head of list
- * Return: number of nodes
+ * is_palindrome - checks if a linked list is a palindrome
+ * @head: double pointer to the linked list
+ *
+ * Return: 1 if it is, 0 if not
  */
-size_t get_list_num(const listint_t *h)
+int is_palindrome(listint_t **head)
 {
-	const listint_t *curr;
-	unsigned int n;
+	listint_t *slow = *head, *fast = *head, *temp = *head, *dup = NULL;
 
-	curr = h;
-	n = 0;
-	while (curr != NULL)
+	if (*head == NULL || (*head)->next == NULL)
+		return (1);
+
+	while (1)
 	{
-		curr = curr->next;
-		n++;
+		fast = fast->next->next;
+		if (!fast)
+		{
+			dup = slow->next;
+			break;
+		}
+		if (!fast->next)
+		{
+			dup = slow->next->next;
+			break;
+		}
+		slow = slow->next;
 	}
 
-	return (n);
+	reverse_listint(&dup);
+
+	while (dup && temp)
+	{
+		if (temp->n == dup->n)
+		{
+			dup = dup->next;
+			temp = temp->next;
+		}
+		else
+			return (0);
+	}
+
+	if (!dup)
+		return (1);
+
+	return (0);
 }
