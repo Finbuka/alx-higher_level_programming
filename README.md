@@ -17,3 +17,5 @@
 [0x06-python-classes](./0x06-python-classes) Introduction to classes in Python
 
 [0x08-python-more_classes](./0x08-python-more_classes) Advanced classes in Python
+
+[0x09-python-everything_is_object](./0x09-python-everything_is_object) Introduction to OOP concepts in Python
