@@ -1,12 +1,12 @@
 #!/usr/bin/python3
-"""Gets https://intranet.hbtn.io/status"""
+"""Fetches https://intranet.hbtn.io/status"""
 
 
 if __name__ == "__main__":
     import urllib.request
 
-    with urllib.request.urlopen('https://intranet.hbtn.io/status') as res:
-        html = res.read()
+    with urllib.request.urlopen('https://intranet.hbtn.io/status') as response:
+        html = response.read()
         print('Body response:')
         print('\t- type: {}'.format(type(html)))
         print('\t- content: {}'.format(html))
